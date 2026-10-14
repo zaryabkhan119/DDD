@@ -1,0 +1,9 @@
+$ python3 fhir_ingest.py NHS-Immunization-FHIR-JSON.json 1
+UploadId=6aca7b2b418a8b86ef76747f ProcessingStatus=NeedsReview DataQualityFlags=['DUPLICATE_DOSE_NUMBER']
+$ python3 fhir_ingest.py NHS-Immunization-FHIR-JSON.json 1   # same file again
+UploadId=6aca7b2c2c25e634c0fca81f ProcessingStatus=NeedsReview DataQualityFlags=['DUPLICATE_DOSE_NUMBER']
+$ SELECT ... FROM VaccinationRecord
+VaccinationRecordId PRSId DoseNumber OccurrenceDate SourceResourceId UploadId PolicyId VerificationStatus
+------------------- ----- ---------- -------------- ---------------- -------- -------- ------------------
+1 PRS000000001 1 2020-12-10 90640007.747583-127 6aca7b2b418a8b86ef76747f 1 Pending
+2 PRS000000001 2 2020-12-31 90640007.747583-128 6aca7b2b418a8b86ef76747f 2 Pending

@@ -1,0 +1,37 @@
+1. Masks on a Monday for someone born 1965 (allowed Thursday) -> expect rejected
+Accepted Reason
+-------- ------
+0 Not an allowed day for this birth year
+2. Five masks on Thursday -> expect accepted
+Accepted Reason PurchaseId
+-------- ------ ----------
+1 Recorded 1
+3. Three more masks the same week -> expect rejected (limit 7/week)
+Accepted Reason
+-------- ------
+0 Limit 7 per Week exceeded (already bought 5)
+4. Milk twice on the same day -> accepted then rejected (1/day)
+Accepted Reason PurchaseId
+-------- ------ ----------
+1 Recorded 2
+Accepted Reason
+-------- ------
+0 Limit 1 per Day exceeded (already bought 1)
+5. Milk next day -> accepted
+Accepted Reason PurchaseId
+-------- ------ ----------
+1 Recorded 3
+6. Alerts raised
+AlertId AlertType PRSId StoreId LimitId ScheduleId Status
+------- --------- ----- ------- ------- ---------- ------
+1 ScheduleBreach PRS000000001 1 NULL 7 Open
+2 LimitBreach PRS000000001 1 2 NULL Open
+3 LimitBreach PRS000000001 1 1 NULL Open
+7. Nearest stores with face masks from Wolverhampton station
+StoreId StoreName Postcode QuantityAvailable DistanceKm
+------- --------- -------- ----------------- ----------
+1 Corner Pharmacy - City Centre WV1 1AA 245 .64
+8. Constraint checks (each should fail)
+  rejected: The INSERT statement conflicted with the CHECK constraint "CK_UserAccount_1". The conflict occurred in database "PRS", table "dbo.UserAccount".
+  rejected: The INSERT statement conflicted with the CHECK constraint "CK_FamilyLink_1". The conflict occurred in database "PRS", table "dbo.FamilyLink".
+  rejected: The INSERT statement conflicted with the FOREIGN KEY constraint "FK_StockLevel_StoreId". The conflict occurred in database "PRS", table "dbo.Store", column 'StoreId'.
